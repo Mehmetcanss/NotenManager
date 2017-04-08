@@ -4,9 +4,63 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotenManager"
+        xmlns:ribbon="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="NotenManager" VerticalAlignment="Stretch" Width="525"
+        WindowState="Maximized" Height="399.578"
+        Name="NotenManager">
+    <Window.Resources>
+        <DataTemplate x:Key="DataTemplate1">
+            <Grid/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Name="UpperRow" Height="90"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <!--<Grid Name="RibbonBackground">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="{Binding ElementName=Schüler}"></RowDefinition>
+                
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="Red" Margin="0,0,0,22"/>
+            <Grid Grid.Row="1" Background="Yellow" Margin="0, -22"></Grid>
+        </Grid>-->
+        <Ribbon Grid.Row="0" Background="Transparent"  Margin="0, -22"  HelpPaneContentTemplate="{DynamicResource DataTemplate1}" >
+            <RibbonTab Name="Schüler" Header="Schüler" VerticalAlignment="Stretch" BorderBrush="#FFB9C9DA" Background="Transparent">
+                <RibbonGroup Name="Klassen" Background="Azure" Header="Klassen" >
+                    <RibbonButton  Label="Klasse 1" Click="RibbonButton_Click" Tag="firstClass"></RibbonButton>
+                    <RibbonButton  Label="Klasse 2" Click="RibbonButton_Click" Tag="secondClass"></RibbonButton>
+                    <RibbonButton  Label="Klasse 3" Click="RibbonButton_Click" Tag="thirdClass"></RibbonButton>
+                    <RibbonButton  Label="Klasse 4" Click="RibbonButton_Click" Tag="fourthClass"></RibbonButton>
+                    <RibbonButton Label="Klasse 5"></RibbonButton>
+                    <RibbonButton Label="Klasse 6"></RibbonButton>
+                </RibbonGroup>
+
+            </RibbonTab>
+
+        </Ribbon>
+
+        <Grid Grid.Row="1" Margin="0, 23, 0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+
+                    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Label Name="TitelLabel"></Label>
+                        <ListView Name="StudentList" SelectionChanged="StudentList_SelectionChanged" DisplayMemberPath="DisplayName" ItemsSource="{Binding Path=CurrentClass, Mode=OneWay}">
+
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
