@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="NotenManager.Controls.EditableListBoxItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NotenManager.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ContentControl MouseDoubleClick="ContentControl_MouseDoubleClick">
+        <Grid >
+          <Label x:Name="DisplayLabel" Content="{Binding Path=EditedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></Label>
+        <TextBox x:Name="NameBox" Text="{Binding Path=EditedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" KeyDown="NameBox_KeyDown" Width="Auto" LostFocus="NameBox_LostFocus"></TextBox>
+    </Grid>
+    </ContentControl>
+</UserControl>

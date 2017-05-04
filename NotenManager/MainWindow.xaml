@@ -4,44 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NotenManager"
+        xmlns:datamodels="clr-namespace:NotenManager.DataModels"
         xmlns:ribbon="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon"
+        xmlns:localControls="clr-namespace:NotenManager.Controls"
         mc:Ignorable="d"
         Title="NotenManager" VerticalAlignment="Stretch" Width="525"
         WindowState="Maximized" Height="399.578"
         Name="NotenManager">
     <Window.Resources>
-        <DataTemplate x:Key="DataTemplate1">
-            <Grid/>
-        </DataTemplate>
+ 
+        <datamodels:AppViewModel x:Key="vm"></datamodels:AppViewModel>
     </Window.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Name="UpperRow" Height="90"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
 
         </Grid.RowDefinitions>
-        <!--<Grid Name="RibbonBackground">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="{Binding ElementName=Schüler}"></RowDefinition>
-                
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Background="Red" Margin="0,0,0,22"/>
-            <Grid Grid.Row="1" Background="Yellow" Margin="0, -22"></Grid>
-        </Grid>-->
-        <Ribbon Grid.Row="0" Background="Transparent"  Margin="0, -22"  HelpPaneContentTemplate="{DynamicResource DataTemplate1}" >
-            <RibbonTab Name="Schüler" Header="Schüler" VerticalAlignment="Stretch" BorderBrush="#FFB9C9DA" Background="Transparent">
-                <RibbonGroup Name="Klassen" Background="Azure" Header="Klassen" >
-                    <RibbonButton  Label="Klasse 1" Click="RibbonButton_Click" Tag="firstClass"></RibbonButton>
-                    <RibbonButton  Label="Klasse 2" Click="RibbonButton_Click" Tag="secondClass"></RibbonButton>
-                    <RibbonButton  Label="Klasse 3" Click="RibbonButton_Click" Tag="thirdClass"></RibbonButton>
-                    <RibbonButton  Label="Klasse 4" Click="RibbonButton_Click" Tag="fourthClass"></RibbonButton>
-                    <RibbonButton Label="Klasse 5"></RibbonButton>
-                    <RibbonButton Label="Klasse 6"></RibbonButton>
-                </RibbonGroup>
 
-            </RibbonTab>
+        <Ribbon Grid.Row="0" Background="Transparent"  Template="{DynamicResource RibbonControlTemplate1}" >
+            <Ribbon.ApplicationMenu>
+
+                <RibbonApplicationMenu>
+                    <RibbonApplicationMenuItem Header="Speichern" ImageSource="Images/Save.png" Command="{Binding SaveClickCommand, Source={StaticResource vm}}" />
+                    <RibbonApplicationMenuItem Header="Öffnen" ImageSource="Images/open.png" Command="{Binding OpenClickCommand, Source={StaticResource vm}}" />
+
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+
 
         </Ribbon>
 
@@ -49,17 +39,44 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListBox Grid.Column="0" Background="Aqua" SelectedItem="{Binding Schule.SelectedGroup, Source={StaticResource vm}}" ItemsSource="{Binding Schule.StudentGroups, Source={StaticResource vm} }">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <localControls:EditableListBoxItem EditedValue="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></localControls:EditableListBoxItem>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <DataGrid x:Name="studentGrid" AutoGenerateColumns="False" Grid.Column="1" SelectedItem="{Binding Schule.SelectedGroup.SelectedStudent, Source={StaticResource vm}, Mode=TwoWay}" ItemsSource="{Binding Path=Schule.SelectedGroup.Students, Source={StaticResource vm}}" CanUserSortColumns="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="SurName" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding SurName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Klein1" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding ersteKlein, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Klein2" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding zweiteKlein, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Klein3" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding dritteKlein, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Klein4" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding vierteKlein, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Klein5" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding fünfteKlein, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Groß1" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding ersteGross, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Groß2" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding zweiteGross, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <DataGridTextColumn Header="Average" Width="Auto" CanUserSort="True" CanUserReorder="True" Binding="{Binding Average, Mode=OneWay}" IsReadOnly="True"/>
+                    </DataGrid.Columns>
 
-                    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Label Name="TitelLabel"></Label>
-                        <ListView Name="StudentList" SelectionChanged="StudentList_SelectionChanged" DisplayMemberPath="DisplayName" ItemsSource="{Binding Path=CurrentClass, Mode=OneWay}">
+                </DataGrid>
+                <Button x:Name="AddStudent" Grid.Row="1" Grid.Column="1" Width="75" Height="30" Margin="0,0,0,0"  HorizontalAlignment="Left" Command="{Binding Schule.SelectedGroup.AddCommand, Source={StaticResource vm}}" >add</Button>
+                <Button x:Name="DeleteStudent" Grid.Row="1" Grid.Column="1" Width="75" Height="30" Margin="0,0,0,0"  HorizontalAlignment="Right" Command="{Binding Schule.SelectedGroup.DeleteCommand, Source={StaticResource vm}}">delete</Button>
+                <Button x:Name="AddClass" Grid.Row="1" Height="30" Width="20" HorizontalAlignment="Left" Command="{Binding Schule.AddStudentGroup, Source={StaticResource vm}}">+</Button>
+                <Button x:Name="RemoveClass" Grid.Row="1" Height="30" Width="20" HorizontalAlignment="Right" Command="{Binding Schule.DeleteStudentGroup, Source={StaticResource vm}}">-</Button>
 
-                        </ListView>
-                    </StackPanel>
-                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:NotenManager" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" xmlns:Primitives="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon" xmlns:System="clr-namespace:System;assembly=mscorlib">
+                    xmlns:local="clr-namespace:NotenManager" 
+                    xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" 
+                    xmlns:Primitives="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon" 
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <ControlTemplate x:Key="RibbonControlTemplate" TargetType="{x:Type Ribbon}">
+    <ControlTemplate x:Key="RibbonControlTemplate1" TargetType="{x:Type Ribbon}">
         <Grid SnapsToDevicePixels="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -16,7 +19,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Border x:Name="BackgroundBorder" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3"/>
-            <Border Grid.ColumnSpan="3" Grid.Row="1">
+            <Border Grid.ColumnSpan="3" Grid.Row="1" Background="Blue">
                 <Popup x:Name="PART_ITEMSPRESENTERPOPUP" AllowsTransparency="True" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
                     <Themes:SystemDropShadowChrome x:Name="Shdw" Color="Transparent" RenderOptions.ClearTypeHint="Enabled" FocusVisualStyle="{x:Null}" Focusable="True" Margin="0,0,5,5">
                         <Border x:Name="CollapsedPopupBackgroundBorder" Background="{TemplateBinding Background}">
@@ -35,7 +38,7 @@
                             <GradientStop Color="#20FFFFFF" Offset="1"/>
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Border BorderBrush="#60FFFFFF" BorderThickness="0,0,0,1" Margin="0,0,0,1" SnapsToDevicePixels="True">
+                    <Border BorderBrush="#60FFFFFF" BorderThickness="0,0,0,1" Margin="0,0,0,1" SnapsToDevicePixels="True" Background="Red">
                         <ItemsPresenter x:Name="ItemsPresenter"/>
                     </Border>
                 </Border>
@@ -54,7 +57,7 @@
                 </Border.Background>
             </Border>
             <DockPanel Grid.ColumnSpan="3" Grid.Column="0" Height="{Binding (0)}" LastChildFill="True">
-                <ContentControl x:Name="windowButtonPlaceHolder" DockPanel.Dock="Right" Focusable="False" IsHitTestVisible="False" Margin="3,0,0,0" Width="{Binding (0)}">
+                <ContentControl x:Name="windowButtonPlaceHolder" DockPanel.Dock="Right" Focusable="False" IsHitTestVisible="False" Margin="3,0,0,0" Width="{Binding (0)}" >
                     <ContentControl.Visibility>
                         <TemplateBinding Property="IsHostedInRibbonWindow">
                             <TemplateBinding.Converter>
