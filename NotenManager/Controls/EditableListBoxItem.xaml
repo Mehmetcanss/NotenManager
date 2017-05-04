@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <ContentControl MouseDoubleClick="ContentControl_MouseDoubleClick">
         <Grid >
-          <Label x:Name="DisplayLabel" Content="{Binding Path=EditedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></Label>
-        <TextBox x:Name="NameBox" Text="{Binding Path=EditedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Hidden" KeyDown="NameBox_KeyDown" Width="Auto" LostFocus="NameBox_LostFocus"></TextBox>
+            <Label x:Name="DisplayLabel" Content="{Binding Path=EditedValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" ></Label>
+        <TextBox x:Name="NameBox" Text="{Binding Path=EditedValue, Mode=TwoWay, UpdateSourceTrigger=Explicit}" Visibility="Hidden" KeyDown="NameBox_KeyDown" Width="Auto" LostFocus="NameBox_LostFocus"></TextBox>
     </Grid>
     </ContentControl>
 </UserControl>

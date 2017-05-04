@@ -27,7 +27,9 @@ namespace NotenManager.Controls
         public string EditedValue
         {
             get { return (string)GetValue(EditedValueProperty); }
-            set { SetValue(EditedValueProperty, value); }
+            set { SetValue(EditedValueProperty, value);
+                OnPropertyChanged(new DependencyPropertyChangedEventArgs());
+            }
         }
 
         // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
@@ -49,12 +51,12 @@ namespace NotenManager.Controls
             this.DisplayLabel.Visibility = Visibility.Hidden;
             this.NameBox.Visibility = Visibility.Visible;
             NameBox.Dispatcher.BeginInvoke(DispatcherPriority.Input,
-    new Action(() => 
+    new Action(() =>
     {
         NameBox.Focus();         // Set Logical Focus
         Keyboard.Focus(NameBox); // Set Keyboard Focus
     }));
-            
+
 
         }
 
@@ -62,10 +64,19 @@ namespace NotenManager.Controls
         {
             if (e.Key == Key.Enter)
             {
+                BindingExpression exp = NameBox.GetBindingExpression(TextBox.TextProperty);
+                exp.UpdateSource();
                 this.NameBox.Visibility = Visibility.Hidden;
                 this.DisplayLabel.Visibility = Visibility.Visible;
-            
+
             }
+            else if (e.Key == Key.Escape)
+            {
+                this.NameBox.Text = EditedValue;
+                this.NameBox.Visibility = Visibility.Hidden;
+                this.DisplayLabel.Visibility = Visibility.Visible;
+            }
+         
         }
 
         private void NameBox_LostFocus(object sender, RoutedEventArgs e)
